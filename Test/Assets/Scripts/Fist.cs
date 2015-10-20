@@ -15,7 +15,7 @@ public class Fist : MonoBehaviour {
 	private Vector handSpeed = Vector.Zero;
 
 	private bool isAttacking = false;
-
+	public static bool IS_ATTACKING = false; 
 	public float _zThreshold = 70f;
 	void Start () {
 		//leap_controller = Leap.Controller;
@@ -59,12 +59,19 @@ public class Fist : MonoBehaviour {
 		//check the attacking gesture 
 		if (isFist) {
 			//check the speed of the hand
+			//if the velocity is greater than the pre set threshold, it is an attack
 			handSpeed = rightHand.PalmVelocity;
 			//Debug.Log("speed is " + handSpeed.ToString());
 
-			if(handSpeed.z >= _zThreshold)
-				Debug.Log("Attacking");
-		}
+			if (handSpeed.z >= _zThreshold) {
+				Debug.Log ("Attacking");
+				isAttacking = true;
+			} else
+				isAttacking = false;
+		} else
+			isAttacking = false;
+
+		IS_ATTACKING = isAttacking;
 
 //		GestureList gesture_list = frame.Gestures();
 //		for (int i = 0; i < gesture_list.Count; i++) {
